@@ -1,35 +1,35 @@
+version: '3.8'
+
 services:
   mariadb:
-    image: bitnami/mariadb:latest
+    image: bitnami/mariadb:11.1.2
     container_name: mariadb
     restart: always
     environment:
-      - MARIADB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}       # Aquí es donde se usa DB_ROOT_PASSWORD
-      - MARIADB_DATABASE=${DB_DATABASE}
-      - MARIADB_USER=${DB_USERNAME}
-      - MARIADB_PASSWORD=${DB_PASSWORD}
-    ports:
-      - "3306:3306"
+      - MARIADB_ROOT_PASSWORD=root
+      - MARIADB_DATABASE=nestHaven
+      - MARIADB_USER=admin
+      - MARIADB_PASSWORD=admin
     volumes:
       - mariadb_data:/bitnami/mariadb
 
   laravel:
-    image: bitnami/laravel:latest
+    image: bitnami/laravel:11.6.0
     container_name: laravel
-    depends_on:
-      - mariadb
+    working_dir: /app
     ports:
       - "8000:8000"
+    environment:
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_USERNAME=admin
+      - DB_DATABASE=nestHaven
+      - DB_PASSWORD=admin
     volumes:
       - ./src:/app
-    environment:
-      - LARAVEL_DATABASE_HOST=mariadb
-      - LARAVEL_DATABASE_PORT=3306
-      - LARAVEL_DATABASE_NAME=${DB_DATABASE}
-      - LARAVEL_DATABASE_USER=${DB_USERNAME}
-      - LARAVEL_DATABASE_PASSWORD=${DB_PASSWORD}
-      - LARAVEL_SKIP_SEEDING=true
-    command: php artisan serve --host=0.0.0.0 --port=8000
+    depends_on:
+      - mariadb
 
 volumes:
   mariadb_data:
+    driver: local
