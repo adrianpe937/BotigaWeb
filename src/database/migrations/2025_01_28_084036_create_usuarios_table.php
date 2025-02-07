@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('usuarios', function (Blueprint $table) {
             $table->id();
+            $table->string('username')->unique(); // Asegura que el nombre de usuario sea único
+            $table->integer('numero');
+            $table->string('email')->unique(); // Asegura que el email sea único
+            $table->string('password'); // Columna para la contraseña
             $table->timestamps();
         });
     }

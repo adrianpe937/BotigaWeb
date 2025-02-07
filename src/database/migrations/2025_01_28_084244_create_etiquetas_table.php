@@ -6,21 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('etiquetas', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre');
+            $table->enum('type', ['enum1', 'enum2', 'enum3']);
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('etiquetas');
     }

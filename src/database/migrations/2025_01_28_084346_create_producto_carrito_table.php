@@ -6,21 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('producto_carrito', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->foreignId('idcarrito')->constrained('pedidos');
+            $table->foreignId('idproducto')->constrained('productos');
+            $table->integer('cantidad');
+            $table->primary(['idcarrito', 'idproducto']);
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('producto_carrito');
     }

@@ -6,8 +6,8 @@ services:
     container_name: mariadb
     restart: always
     environment:
-      - MARIADB_ROOT_PASSWORD=root
-      - MARIADB_DATABASE=nestHaven
+      - MARIADB_ROOT_PASSWORD=admin
+      - MARIADB_DATABASE=laravel
       - MARIADB_USER=admin
       - MARIADB_PASSWORD=admin
     volumes:
@@ -23,7 +23,7 @@ services:
       - DB_HOST=mariadb
       - DB_PORT=3306
       - DB_USERNAME=admin
-      - DB_DATABASE=nestHaven
+      - DB_DATABASE=laravel
       - DB_PASSWORD=admin
     volumes:
       - ./src:/app
